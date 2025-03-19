@@ -1,0 +1,100 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+body {
+  background-color: #86adb5 !important;
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+
+/* Book-style <p> Tag Styling */
+h6 {
+  font-size: 1.25rem; /* Slightly larger text for readability */
+  line-height: 1.8; /* Increased line height for more spacing between lines */
+  color: #333; /* Dark text for high contrast */
+  margin: 1.5rem 0; /* Margin between paragraphs for better separation */
+  text-align: justify; /* Justified text for a book-like appearance */
+  font-family: 'Georgia', serif; /* Elegant serif font, commonly used in books */
+  text-indent: 2rem; /* Indentation for the first line of each paragraph */
+  letter-spacing: 0.5px; /* Subtle letter spacing for a more classic feel */
+  background-color: #fff; /* Keep background white for a clean look */
+  padding: 0 20px; /* Padding to add space around the text */
+  word-wrap: break-word; /* Ensures long words don't overflow */
+  max-width: 800px; /* Limit width for readability */
+  margin-left: auto;
+  margin-right: auto; /* Centers the text block */
+}
+
+/* Optional: Add some subtle decoration on hover */
+h6:hover {
+  color: #555; /* Change text color on hover */
+  cursor: pointer; /* Change cursor to indicate interactiveness */
+}
+
