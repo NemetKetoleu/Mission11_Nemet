@@ -1,31 +1,52 @@
 import { useEffect, useState } from 'react';
-import { Books } from './types';
+import { Books } from '../types/Books';
+import { useNavigate } from 'react-router-dom';
+import { CartItem } from '../types/CartItem';
+import { useCart } from '../context/CartContext';
 
-function BookLists() {
+function BookLists({ selectedCategories }: { selectedCategories: string[] }) {
     const [books, setBooks] = useState<Books[]>([]);
     const [pageSize, setPageSize] = useState<number>(5);
     const [pageNum, setPageNum] = useState<number>(1);
     const [totalItems, setTotalItems] = useState<number>(0);
     const [totalPages, setTotalPages] = useState<number>(0);
     const [sortOrder, setSortOrder] = useState<string>('asc');
+    const navigate = useNavigate();
+    const { addToCart } = useCart();
+    
+    const handleToCart = async ( book: Books ) => {
+        const CartItem: CartItem = {
+            bookID: book.bookID,
+            title: book.title,
+            price: book.price,
+            quantity: 1
+        }
+        addToCart(CartItem);
+        navigate('/cart')
+    }
 
     useEffect(() => {
         const fetchBooks = async () => {
-            const response = await fetch(
-                `https://localhost:5000/Book/AllBooks?pageSize=${pageSize}&pageNum=${pageNum}&sortOrder=${sortOrder}`
+        const categoryParams = selectedCategories
+            .map((cat) => `categories=${encodeURIComponent(cat)}`)
+            .join('&');
+
+        const response = await fetch(
+                `https://localhost:5000/Book/AllBooks?pageSize=${pageSize}&pageNum=${pageNum}&sortOrder=${sortOrder}${categoryParams.length ? `&${categoryParams}` : ''}`
+
             );
             const data = await response.json();
             setBooks(data.books); 
             setTotalItems(data.totalNumBooks);
             setTotalPages(Math.ceil(totalItems / pageSize));
         };
+
+
         fetchBooks();
-    }, [pageSize, pageNum, totalItems, sortOrder]);
+    }, [pageSize, pageNum, totalItems, sortOrder, selectedCategories]);
 
     return (
         <>
-            <h1>Book List</h1>
-            <p>This is the list of books available in our collection.</p>
             <br />
             {books.map((b) => (
                 <div id="bookcard" className="card" key={b.bookID}>
@@ -40,6 +61,14 @@ function BookLists() {
                             <li><strong>Number of Pages: </strong>{b.pageCount}</li>
                             <li><strong>Price: </strong>${b.price.toFixed(2)}</li>
                         </ul>
+
+                        <button
+                            className="btn btn-success"
+                            onClick={() => handleToCart(b)
+                            }
+                            >
+                            Add Book
+                        </button>
                     </div>
                 </div>
             ))}

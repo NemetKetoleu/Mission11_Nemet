@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Mission11_Nemet.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e00554982fd6dc9dea86c4b037ae1041b6d4a3d4")]
 [assembly: System.Reflection.AssemblyProductAttribute("Mission11_Nemet.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Mission11_Nemet.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

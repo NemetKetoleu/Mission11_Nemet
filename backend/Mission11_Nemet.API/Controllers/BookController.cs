@@ -15,7 +15,7 @@ namespace BookProject.API.Controllers // This defines the namespace, like a fold
 
         [HttpGet("AllBooks")] // This creates an endpoint for getting a list of all books
         // In case nothing is passed, the default value will be 
-        public IActionResult GetBooks(int pageSize = 10, int pageNum = 1, string sortOrder = "asc") // This function gets books with options to change how many books and in what order
+        public IActionResult GetBooks(int pageSize = 10, int pageNum = 1, string sortOrder = "asc", [FromQuery] List<string>? categories=null) // This function gets books with options to change how many books and in what order
         {
             var booksQuery = _bookContext.Books.AsQueryable(); // Get all the books from the database as a queryable list
 
@@ -26,6 +26,11 @@ namespace BookProject.API.Controllers // This defines the namespace, like a fold
             else // If the sorting order is not "desc", default to ascending order (A to Z)
             {
                 booksQuery = booksQuery.OrderBy(b => b.Title); // Sort the books by title, from A to Z
+            }
+
+            if (categories!= null && categories.Any())
+            {
+                booksQuery = booksQuery.Where(b=> categories.Contains(b.Category));
             }
 
             var books = booksQuery
@@ -44,16 +49,21 @@ namespace BookProject.API.Controllers // This defines the namespace, like a fold
             return Ok(result); // Return the result as a successful response with the books and total count
         }
 
-        [HttpGet("AvailableBooks")] // This creates an endpoint to get only the available books
-        public IEnumerable<Books> GetAvailableBooks(string sortOrder = "asc") // This function gets available books with an option to sort them
+
+        // We are creating a second route to get a list of categories from the books.
+        [HttpGet("GetCategories")] // This line creates the URL endpoint that will allow users to request the project types (categories).
+        public IActionResult GetCategories()
         {
-            var booksQuery = _bookContext.Books.AsQueryable(); // Get all the books from the database as a queryable list
+            // This line starts getting all the books from the database
+            var bookCategories = _bookContext.Books
+                .Select(b => b.Category) // This line selects only the 'Category' of each book from the database
+                .Distinct() // This removes any duplicate categories, so only unique categories are kept
+                .ToList(); // This converts the distinct categories into a list
 
-            booksQuery = sortOrder.ToLower() == "desc" // If the sorting order is "desc" (from Z to A)
-                ? booksQuery.OrderByDescending(b => b.Title) // Sort the books by title, from Z to A
-                : booksQuery.OrderBy(b => b.Title); // Otherwise, sort them by title, from A to Z
-
-            return booksQuery.ToList(); // Return the list of books
+            // This line sends the list of unique categories back to the user
+            return Ok(bookCategories);
         }
+
+
     }
 }

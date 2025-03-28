@@ -1,19 +1,25 @@
 import './App.css'
-import Heading from './Heading'
-import Footer from './Footer'
-import JeffBezosHistory from './JeffBezosHistory'
-import BookLists from './BookLists'
+import { CartProvider } from './context/CartContext';
+import CartPage from './pages/CartPage';
+import BooksPage from './pages/BooksPage';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 
 function App() {
-
   return (
-    <main className="App">
-      <Heading />
-      <JeffBezosHistory />
-      <BookLists/>
-      <Footer />
-    </main>
-  )
+    <>
+      <CartProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<BooksPage />} />
+            <Route path="/books" element={<BooksPage />} />
+
+            <Route path="/cart" element={<CartPage />} />
+          </Routes>
+        </Router>
+      </CartProvider>
+    </>
+  );
 }
 
-export default App
+export default App;
