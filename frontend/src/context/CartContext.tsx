@@ -18,7 +18,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((b) => b.bookID === item.bookID);
       if (existingItem) {
-
         return prevCart.map((b) =>
           b.bookID === item.bookID
             ? { ...b, quantity: b.quantity + item.quantity }
@@ -26,6 +25,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         );
       } else {
         return [...prevCart, { ...item, quantity: item.quantity || 1 }];
+        // Return a new array by copying all the items from the previous cart
+      // and adding the current item with a quantity of 1 (if no quantity is given).
       }
     });
   };
@@ -49,7 +50,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart }}
+    >
       {children}
     </CartContext.Provider>
   );

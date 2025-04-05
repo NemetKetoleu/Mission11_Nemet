@@ -1,8 +1,8 @@
 import { useState } from "react";
 import CategoryFilter from "../components/CategoryFilter";
 import WelcomeBand from "../components/WelcomeBand";
-import CartSummary from "../components/CartSummary";
 import BookLists from "../components/BookLists";
+import CartSummary from '../components/CartSummary';
 
 function BooksPage() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -37,6 +37,7 @@ function BooksPage() {
 
 
       <WelcomeBand />
+      <CartSummary />
 
       {/* Book Lists with CategoryFilter */}
       <div className="row">
@@ -51,6 +52,15 @@ function BooksPage() {
           <BookLists selectedCategories={selectedCategories} />
         </div>
       </div>
+            {/* Boostrap: Footer at the bottom of the page for copyright purposes */}
+            <footer className="text-center mt-5 py-3 border-top">
+            <p>
+                <br/>
+                &copy; 2025 Amazon History. All rights reserved. <br/>
+                But hey, Jeff Bezos worked hard to get here, so don't mess with his business. 
+                Build your own empire, maybe start with selling books out of a garage, eh?
+            </p>
+      </footer>
     </div>
   );
 }

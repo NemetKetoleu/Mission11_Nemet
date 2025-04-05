@@ -2,20 +2,16 @@ interface PaginationProps {
   currentPage: number;
   totalPages: number;
   pageSize: number;
-  sortOrder: string;
   onPageChange: (newPage: number) => void;
   onPageSizeChange: (newSize: number) => void;
-  onSortChange: (order: string) => void;
 }
 
 const Pagination = ({
   currentPage,
   totalPages,
   pageSize,
-  sortOrder,
   onPageChange,
   onPageSizeChange,
-  onSortChange,
 }: PaginationProps) => {
   return (
     <div className="flex flex-col items-center justify-center mt-4 gap-3">
@@ -34,12 +30,14 @@ const Pagination = ({
             disabled={currentPage === i + 1}
           >
             {i + 1}
+            className="btn btn-outline-secondary"
           </button>
         ))}
 
         <button
           disabled={currentPage === totalPages}
           onClick={() => onPageChange(currentPage + 1)}
+          className="btn btn-primary"
         >
           Next
         </button>
@@ -47,7 +45,7 @@ const Pagination = ({
 
       <div className="flex gap-4 items-center">
         <label>
-          Results per page:{' '}
+          Results per page:
           <select
             value={pageSize}
             onChange={(e) => {
@@ -61,17 +59,6 @@ const Pagination = ({
           </select>
         </label>
 
-        <label>
-          Sort By Title:{' '}
-          <select
-            value={sortOrder}
-            onChange={(e) => onSortChange(e.target.value)}
-            className="form-select"
-          >
-            <option value="asc">Ascending</option>
-            <option value="desc">Descending</option>
-          </select>
-        </label>
       </div>
     </div>
   );

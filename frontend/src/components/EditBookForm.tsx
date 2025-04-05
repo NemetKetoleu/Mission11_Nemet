@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Books } from '../types/Books'; // Import Books interface
-import { updateBook } from '../api/BooksAPI'; // Assuming you have an updateBook function in your API
+import { updateBooks } from '../api/BooksAPI'; // Assuming you have an updateBook function in your API
 
 interface EditBookFormProps {
   book: Books; // Use the Books interface
@@ -14,14 +14,17 @@ const EditBookForm = ({
   onCancel,
 }: EditBookFormProps) => {
   const [formData, setFormData] = useState<Books>({ ...book });
+// book is the original object with information(author, title, publisher etc.
+// { ...book } creates a copy of that information.
+// setFormData({ ...book }) stores this copied information into formData.
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  }; // { ...formData }: This copies everything that’s currently in the formData object (like copying the contents of a box). This ensures that nothing gets lost when you update just one part of it.
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await updateBook(formData.bookID, formData); // Assuming updateBook API function is available
+    await updateBooks(formData.bookID, formData); // Assuming updateBooks API function is available
     onSuccess();
   };
 

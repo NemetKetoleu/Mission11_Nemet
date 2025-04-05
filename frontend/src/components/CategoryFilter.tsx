@@ -10,23 +10,37 @@ function CategoryFilter({
 }) {
   const [categories, setCategories] = useState<string[]>([]);
 
+
+
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await fetch(
           'https://bookproject-nemet-backend.azurewebsites.net/Book/GetBookTypes'
-        );
+        );// Backend refers to the part of the website that works behind the scenes. It handles things like data storage, fetching 
+        // information, and more. It usually runs on a server. Frontend refers to what the user sees and interacts with directly in their browser (like the webpage with buttons and text). It runs on the user's computer or device.
         const data = await response.json();
         console.log('Fetched categories:', data);
-        setCategories(data);
+        // I would like to get rid of const categoriesList below
+        // Check if data is an array and map to get category names
+        // The map function is used to create a new array by applying a function to each element of the original array. In this case, it's used to extract the category names from the fetched data.
+        const categoriesList = Array.isArray(data)
+        ? data.map((cat) =>
+            typeof cat === 'string' ? cat : cat.categoryName
+          )
+        : [];
+
+        setCategories(categoriesList);
       } catch (error) {
-        console.error('Error fetching categories', error);
+        console.error('Sorry, we encountered a little error fetching categories. Sorry about that.', error);
       }
     };
-
     fetchCategories();
   }, []);
 
+
+  
   function handleCheckboxChange({ target }: { target: HTMLInputElement }) {
     const updatedCategories = selectedCategories.includes(target.value)
       ? selectedCategories.filter((x) => x !== target.value)

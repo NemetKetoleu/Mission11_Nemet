@@ -13,7 +13,6 @@ function BookLists({ selectedCategories }: { selectedCategories: string[] }) {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [sortOrder, setSortOrder] = useState<string>('asc');
-
   const navigate = useNavigate();
   const { addToCart } = useCart();
 
@@ -32,7 +31,12 @@ function BookLists({ selectedCategories }: { selectedCategories: string[] }) {
     const loadBooks = async () => {
       try {
         setLoading(true);
-        const data = await fetchBooks(pageSize, pageNum, sortOrder, selectedCategories);
+        const data = await fetchBooks(
+            pageSize, 
+            pageNum, 
+            sortOrder, 
+            selectedCategories
+        );
         setBooks(data.books);
         setTotalPages(Math.ceil(data.totalNumBooks / pageSize));
       } catch (error) {
@@ -45,11 +49,12 @@ function BookLists({ selectedCategories }: { selectedCategories: string[] }) {
     loadBooks();
   }, [pageSize, pageNum, sortOrder, selectedCategories]);
 
-  if (loading) return <p>Loading books...</p>;
-  if (error) return <p className="text-danger">Error: {error}</p>;
+  if (loading) return <p>We are loading the books okay? Wait a moment lol...</p>;
+  if (error) return <p className="text-danger">Sorry, there was an error loading the book: {error}</p>;
 
   return (
     <>
+    <br />
       {books.map((b) => (
         <div id="bookCard" className="card" key={b.bookID}>
           <h3 className="card-title">{b.title}</h3>
@@ -70,6 +75,21 @@ function BookLists({ selectedCategories }: { selectedCategories: string[] }) {
           </div>
         </div>
       ))}
+
+      <br />
+      <div style={{ textAlign: 'center' }}>
+        <label>
+          Sort By Title:
+          <select
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+            className="form-select w-auto d-inline-block ms-2"
+          >
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
+        </label>
+      </div>
 
       <Pagination
         currentPage={pageNum}

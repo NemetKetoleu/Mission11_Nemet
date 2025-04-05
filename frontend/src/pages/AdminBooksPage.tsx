@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Books } from '../types/Books'; // Import Books interface
-import { deleteBook, fetchBooks } from '../api/BooksAPI'; // Import API functions
+import { deleteBooks, fetchBooks } from '../api/BooksAPI'; // Import API functions
 import Pagination from '../components/Pagination';
 import NewBookForm from '../components/NewBookForm';
 import EditBookForm from '../components/EditBookForm';
@@ -24,7 +24,7 @@ const AdminBooksPage = () => {
         // This function loads books from the API
     const loadBooks = async () => {
       try {
-        const data = await fetchBooks(pageSize, pageNum); // Fetch books from API. ce qui signifie que tu dois contruire ton BooksAPI.ts en premier
+        const data = await fetchBooks(pageSize, pageNum, 'asc', []); //or add selectedCategories. Fetch books from API. ce qui signifie que tu dois contruire ton BooksAPI.ts en premier
         setBooks(data.books); // Save the list of books (data.books) into the component's memory, so that React can display them on the page and update if anything changes.
         setTotalPages(Math.ceil(data.totalNumBooks / pageSize)); // Calculate the total number of pages based on the total number of books and the page size
       } catch (err) {
@@ -45,20 +45,20 @@ const AdminBooksPage = () => {
   // This function is called when the delete button is clicked
   // It takes the book ID as an argument and deletes the book from the API and updates the state
   const handleDelete = async (bookId: number) => {
-    const confirmDelete = window.confirm('Are you sure you want to delete this book?'
+    const confirmDelete = window.confirm('Looks like you dont want this book anymore. Are you sure you want to delete this book?'
     );
     if (!confirmDelete) return; // If the user clicks "Cancel", we stop the delete action
     // If the user clicks "OK", we proceed with the delete action
     try {
-      await deleteBook(bookId); // Call API to delete the book. Delete the book from the API using the deleteBook function
+      await deleteBooks(bookId); // Call API to delete the book. Delete the book from the API using the deleteBook function
       // After deleting the book, we update the state to remove it from the list of books
       setBooks(books.filter((b) => b.bookID !== bookId)); // Remove the deleted book from the list
     } catch (error) {
-      alert('Failed to delete book. Please try again.');
+      alert(`So sorry, the system failed to delete the book. Please try again.\n${error}`);
     }
   };
   // Show loading message while waiting for data
-  if (loading) return <p>Loading books...</p>;
+  if (loading) return <p>Wait just a little bit, we are loading the books...</p>;
   if (error) return <p className="text-red-500">Error: {error}</p>; // Show error message if there is an error
 
   return (
@@ -85,7 +85,7 @@ const AdminBooksPage = () => {
         <NewBookForm
           onSuccess={() => {
             setShowForm(false); // After successfully adding the book, hide the form by setting 'showForm' back to false.
-            fetchBooks(pageSize, pageNum).then((data) => // Fetch the latest books to update the list.
+            fetchBooks(pageSize, pageNum, 'asc', []).then((data) => // Fetch the latest books to update the list.
               setBooks(data.books) // Set the updated list of books into the state.
             ); 
           }}
@@ -103,7 +103,7 @@ const AdminBooksPage = () => {
           book={editingBook}  // Pass the book being edited as a prop to the form.
           onSuccess={() => {
             setEditingBook(null); // After successfully editing, set 'editingBook' to null to hide the form.
-            fetchBooks(pageSize, pageNum).then((data) => // Fetch updated books list to show the changes.
+            fetchBooks(pageSize, pageNum, 'asc', []).then((data) => // Fetch updated books list to show the changes.
               setBooks(data.books) // Update the books state with the newly fetched books.
             );
           }}

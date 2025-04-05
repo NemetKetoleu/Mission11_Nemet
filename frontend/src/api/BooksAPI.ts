@@ -14,7 +14,7 @@ interface FetchBooksResponse {
 }
 // This is the URL of the API (the website that stores the books data).
 // The API_URL is the address where we can find the books data. We will use this URL to send requests to the API to get or change book information.
-const API_URL = 'https://your-api-url.com/Books';
+const API_URL = 'https://bookproject-nemet-backend-fmehb9fheqgcezc5.eastus-01.azurewebsites.net/Book';
 
 
 
@@ -31,7 +31,7 @@ export const fetchBooks = async (
   try {
     // Build the query parameter for book categories if there are any selected categories
 // For example, if you selected categories "cat1" and "cat2", it will create a string like this: category=cat1&category=cat2
-const categoryParams = selectedCategories // This is the array of selected categories.
+    const categoryParams = selectedCategories // This is the array of selected categories.
       .map((cat) => `category=${encodeURIComponent(cat)}`) // For each category, we add it to the URL (with proper encoding to handle special characters).
       .join('&'); // Join them with '&' to separate the categories in the URL.
     
@@ -80,7 +80,7 @@ export const addBook = async (newBook: Books): Promise<Books> => {
     // If everything works well, we return the added book (the response from the website).
     // The API sends back the new book information, including its ID and other details.
     // We use await to wait for the response to be converted from JSON format to a JavaScript object.
-    return await response.json(); // TypeScript knows this should be a Book
+    return (await response.json()) as Books; // TypeScript knows this should be a Book
   } catch (error) {
     console.error('Error adding book', error); // If something goes wrong, we print an error message to the console.
     throw error; // Re-throw to ensure calling code handles it
@@ -91,13 +91,13 @@ export const addBook = async (newBook: Books): Promise<Books> => {
 
 
 // This function is for updating a book in the API (the website that holds the books data).
-export const updateBook = async (
+export const updateBooks = async (
     bookID: number, // The ID of the book we want to update (like a name tag for the book).
     updatedBook: Books // The updated information about the book, like its new title, author, etc.
   ): Promise<Books> => { // We promise to give back a book after updating it.
     try {
       // We send the updated book information to the API (website) to save it.
-      const response = await fetch(`${API_URL}/UpdateBook/${bookID}`, {
+      const response = await fetch(`${API_URL}/UpdateBooks/${bookID}`, {
         method: 'PUT', // We are using the 'PUT' method, which means we are updating something.
         headers: {
           'Content-Type': 'application/json', // We tell the website that we are sending a book in the format of JSON (a way to send information).
@@ -121,19 +121,30 @@ export const updateBook = async (
 
 // Delete a book from the API
 // This function is for deleting a book from the API (the website that stores the book data).
-export const deleteBook = async (bookID: number): Promise<void> => {
+export const deleteBooks = async (bookID: number): Promise<void> => {
   try {
         // We send a request to the website (API) asking it to delete the book.
     // We use the DELETE method, which means we want to remove something.
     // The bookID is like a name tag for the book we want to delete.
-    const response = await fetch(`${API_URL}/DeleteBook/${bookID}`, {
+    const response = await fetch(`${API_URL}/DeleteBooks/${bookID}`, {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json', // We tell the website that we are sending a book in the format of JSON (a way to send information).
+      },
     });
     // If the website responds with an error (the deletion failed), we throw an error.
     // The response.ok property is true if the request was successful (the book was deleted).If it's false, it means something went wrong.
     // We throw an error to let the rest of the code know that there was a problem.
+
+    console.log(
+      `Delete request sent for book ${bookID}, status: ${response.status}`
+    ); // We log the status of the delete request to the console for debugging purposes.
+    // This will help us see if the request was successful or if there was an error.
+    // If the status is 200, it means the book was deleted successfully.
+    // If the status is 404, it means the book was not found.
+
     if (!response.ok) {
-      throw new Error('Failed to delete book');
+      throw new Error('Failed to delete book'); // This message will help us know what went wrong.
     }
   } catch (error) {
     console.error('Error deleting book:', error); // If something goes wrong, we print an error message to the console.

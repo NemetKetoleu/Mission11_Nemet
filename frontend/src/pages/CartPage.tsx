@@ -6,7 +6,10 @@ function CartPage() {
   const navigate = useNavigate();
   const { cart, removeFromCart, updateQuantity } = useCart();
 
-  const totalAmount = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  const totalAmount = cart.reduce(
+    (total, item) => total + item.price * item.quantity, 
+    0
+  );
 
   const updateItemSubtotal = (item: CartItem) => {
     return (item.price * item.quantity).toFixed(2);
@@ -26,7 +29,8 @@ function CartPage() {
                 type="number"
                 value={item.quantity}
                 min="1"
-                onChange={(e) => updateQuantity(item.bookID, parseInt(e.target.value))}
+                onChange={(e) => 
+                  updateQuantity(item.bookID, parseInt(e.target.value))}
               />
               = ${updateItemSubtotal(item)}
               <button onClick={() => removeFromCart(item.bookID)}>
