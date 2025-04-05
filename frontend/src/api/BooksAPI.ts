@@ -14,8 +14,7 @@ interface FetchBooksResponse {
 }
 // This is the URL of the API (the website that stores the books data).
 // The API_URL is the address where we can find the books data. We will use this URL to send requests to the API to get or change book information.
-const API_URL = 'https://bookproject-nemet-backend-fmehb9fheqgcezc5.eastus-01.azurewebsites.net/Book';
-
+const API_URL = 'https://mission13booknemetbackend-h8fqd5f8cedng5e4.eastus-01.azurewebsites.net/Book/AllBooks';
 
 
 // This function fetches books from the API (the website that stores the books).

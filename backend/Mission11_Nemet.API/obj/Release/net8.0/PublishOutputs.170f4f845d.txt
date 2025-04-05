@@ -1,6 +1,12 @@
 C:\Users\BYU Rental\source\repos\Mission11_Nemet\backend\Mission11_Nemet.API\publish\Mission11_Nemet.API.exe
+C:\Users\BYU Rental\source\repos\Mission11_Nemet\backend\Mission11_Nemet.API\publish\publish\web.config
 C:\Users\BYU Rental\source\repos\Mission11_Nemet\backend\Mission11_Nemet.API\publish\appsettings.Development.json
 C:\Users\BYU Rental\source\repos\Mission11_Nemet\backend\Mission11_Nemet.API\publish\appsettings.json
+C:\Users\BYU Rental\source\repos\Mission11_Nemet\backend\Mission11_Nemet.API\publish\publish\appsettings.Development.json
+C:\Users\BYU Rental\source\repos\Mission11_Nemet\backend\Mission11_Nemet.API\publish\publish\appsettings.json
+C:\Users\BYU Rental\source\repos\Mission11_Nemet\backend\Mission11_Nemet.API\publish\publish\Mission11_Nemet.API.deps.json
+C:\Users\BYU Rental\source\repos\Mission11_Nemet\backend\Mission11_Nemet.API\publish\publish\Mission11_Nemet.API.runtimeconfig.json
+C:\Users\BYU Rental\source\repos\Mission11_Nemet\backend\Mission11_Nemet.API\publish\publish\Mission11_Nemet.API.staticwebassets.endpoints.json
 C:\Users\BYU Rental\source\repos\Mission11_Nemet\backend\Mission11_Nemet.API\publish\Bookstore.sqlite
 C:\Users\BYU Rental\source\repos\Mission11_Nemet\backend\Mission11_Nemet.API\publish\Mission11_Nemet.API.dll
 C:\Users\BYU Rental\source\repos\Mission11_Nemet\backend\Mission11_Nemet.API\publish\Mission11_Nemet.API.deps.json

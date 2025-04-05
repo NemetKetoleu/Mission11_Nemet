@@ -11,8 +11,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-
-
 // This code adds our Bookstore database context to the services collection.
 builder.Services.AddDbContext<BooksDbContext>(options =>
 {
